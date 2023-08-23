@@ -56,7 +56,7 @@ public class CoinSpawner : NetworkBehaviour
         float y = Random.Range(ySpawnRange.x, ySpawnRange.y);
       
         Vector3 result = ((Vector3.right * x) + (Vector3.forward * y));
-        Debug.LogError(result);
+       
         return result + Vector3.up ;
     }
 }

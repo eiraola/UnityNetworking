@@ -8,7 +8,6 @@ public class CoinWallet : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("xd");
         if (other.TryGetComponent<RespawningCoin>(out RespawningCoin col))
         {
             if (!IsServer)

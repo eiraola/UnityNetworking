@@ -10,6 +10,8 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using Unity.Services.Lobbies.Models;
+using System.Text;
+using Unity.Services.Authentication;
 
 public class HostGameManager
 {
@@ -19,6 +21,8 @@ public class HostGameManager
     private string JoinCode;
     private string lobbyID;
     private int timeBetweenPings = 15;
+    private NetworkServer networkServer;
+
     public async Task InitAsync()
     {
         // authenticate player
@@ -60,7 +64,8 @@ public class HostGameManager
                     )
                 }
             };
-           Lobby lobby = await Lobbies.Instance.CreateLobbyAsync("My lobby name", maxConections, lobbyOptions);
+           string playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name");
+           Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"{playerName}", maxConections, lobbyOptions);
            lobbyID = lobby.Id;
             HostSingleton.Instance.StartCoroutine(PingLobby(lobbyID));
         }
@@ -70,6 +75,15 @@ public class HostGameManager
             Debug.LogError(e);
             return;
         }
+        networkServer = new NetworkServer(NetworkManager.Singleton);
+        UserData userData = new UserData
+        {
+            userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
+            userAuthId = AuthenticationService.Instance.PlayerId
+        };
+        string payload = JsonUtility.ToJson(userData);
+        byte[] payloadBytes = Encoding.UTF8.GetBytes(payload);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payloadBytes;
         NetworkManager.Singleton.StartHost();
         NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
