@@ -13,7 +13,7 @@ using Unity.Services.Lobbies.Models;
 using System.Text;
 using Unity.Services.Authentication;
 
-public class HostGameManager
+public class HostGameManager: IDisposable
 {
     
     private const int maxConections = 20;
@@ -22,6 +22,7 @@ public class HostGameManager
     private string lobbyID;
     private int timeBetweenPings = 15;
     private NetworkServer networkServer;
+    private Coroutine coHeartBeat = null;
 
     public async Task InitAsync()
     {
@@ -67,7 +68,7 @@ public class HostGameManager
            string playerName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name");
            Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"{playerName}", maxConections, lobbyOptions);
            lobbyID = lobby.Id;
-            HostSingleton.Instance.StartCoroutine(PingLobby(lobbyID));
+            coHeartBeat =  HostSingleton.Instance.StartCoroutine(PingLobby(lobbyID));
         }
         catch (System.Exception e)
         {
@@ -95,5 +96,24 @@ public class HostGameManager
             Lobbies.Instance.SendHeartbeatPingAsync(lobbyID);
             yield return delay;
         }
+    }
+
+    public async void Dispose()
+    {
+        HostSingleton.Instance.StopCoroutine(coHeartBeat);
+        coHeartBeat = null;
+        if (!string.IsNullOrEmpty(lobbyID))
+        {
+            try
+            {
+                await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.LogError(e);
+            }
+            lobbyID = string.Empty;
+        }
+        networkServer?.Dispose();
     }
 }

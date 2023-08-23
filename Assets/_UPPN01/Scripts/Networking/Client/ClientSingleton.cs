@@ -41,4 +41,8 @@ public class ClientSingleton : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+    private void OnDestroy()
+    {
+        gameManager?.Dispose();
+    }
 }

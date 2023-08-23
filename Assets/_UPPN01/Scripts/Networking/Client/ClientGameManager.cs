@@ -10,11 +10,17 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using System.Text;
 using Unity.Services.Authentication;
+using System;
 
-public class ClientGameManager {
+public class ClientGameManager:IDisposable {
 
     private JoinAllocation joinAllocation;
     private NetworkClient _networkClient;
+
+    public void Dispose()
+    {
+        _networkClient?.Dispose();
+    }
 
     public async Task<bool> InitAsync()
     {
