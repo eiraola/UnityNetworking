@@ -23,9 +23,7 @@ public class DoDamageOnContact : MonoBehaviour
         }
         if (other.TryGetComponent<Health>(out Health health))
         {
-            Debug.LogError("xDD");
             health.TakeDamage(damage);
         }
-        Debug.LogError("xD");
     }
 }

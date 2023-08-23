@@ -14,6 +14,7 @@ public class HealthDisplay : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+       
         if (!IsClient)
         {
             return;
@@ -37,6 +38,6 @@ public class HealthDisplay : NetworkBehaviour
     }
     public void HandleHealthChange(int oldvalue, int newValue)
     {
-        healthDisplay.fillAmount =((float)newValue / health.MaxHealth);
+        healthDisplay.fillAmount = ((float)newValue / health.MaxHealth);
     }
 }

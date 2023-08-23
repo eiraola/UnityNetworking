@@ -21,7 +21,7 @@ public class HostGameManager: IDisposable
     private string JoinCode;
     private string lobbyID;
     private int timeBetweenPings = 15;
-    private NetworkServer networkServer;
+    public NetworkServer NetworkServer { get; private set; }
     private Coroutine coHeartBeat = null;
 
     public async Task InitAsync()
@@ -76,7 +76,7 @@ public class HostGameManager: IDisposable
             Debug.LogError(e);
             return;
         }
-        networkServer = new NetworkServer(NetworkManager.Singleton);
+        NetworkServer = new NetworkServer(NetworkManager.Singleton);
         UserData userData = new UserData
         {
             userName = PlayerPrefs.GetString(NameSelector.PlayerNameKey, "Missing Name"),
@@ -114,6 +114,6 @@ public class HostGameManager: IDisposable
             }
             lobbyID = string.Empty;
         }
-        networkServer?.Dispose();
+        NetworkServer?.Dispose();
     }
 }

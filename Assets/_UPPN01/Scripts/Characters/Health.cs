@@ -31,6 +31,10 @@ public class Health : NetworkBehaviour
 
     public void ModifyHealth(int health)
     {
+        if (!IsServer)
+        {
+            return;
+        }
         if (isDead)
         {
             return;

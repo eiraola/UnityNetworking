@@ -13,8 +13,13 @@ public class PlayerMovement : NetworkBehaviour
     private float movementSpeed;
     [SerializeField]
     private float turnSpeed;
+    [SerializeField]
+    private float maxAngle = 45.0f;
+    [SerializeField]
+    private float speed = 0.01f;
+    private float currentTargetAngle = 0.0f;
+    private float previousMousePos = 0.0f;
     private Vector2 previousMovementInput = Vector2.zero;
-
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
@@ -41,27 +46,25 @@ public class PlayerMovement : NetworkBehaviour
         }
         inputReader.MovementEvent -= HandleMovement;
     }
-    private void Update()
-    {
-        if (!IsOwner)
-        {
-            return;
-        }
-        float yRotation = previousMovementInput.x * turnSpeed * Time.deltaTime;
-        transform.Rotate(0.0f, yRotation, 0.0f);
-    }
     public void FixedUpdate()
     {
         if (!IsOwner)
         {
             return;
         }
-        rb.MovePosition(transform.position + transform.forward * previousMovementInput.y * movementSpeed * Time.fixedDeltaTime);
-        
+        rb.velocity = (transform.forward * previousMovementInput.y + transform.right * previousMovementInput.x) * movementSpeed;
+        MoveCannon();
+
     }
     
     public void HandleMovement(Vector2 movement)
     {
         previousMovementInput = movement;
+    }
+    public void MoveCannon()
+    {
+        currentTargetAngle += (inputReader.MousePos.x - previousMousePos) * turnSpeed;
+        previousMousePos = inputReader.MousePos.x;
+        transform.rotation = Quaternion.Euler(0.0f, currentTargetAngle, 0.0f);
     }
 }
