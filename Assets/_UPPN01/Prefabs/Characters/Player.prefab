@@ -1019,6 +1019,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 6618236999093134281}
   cameraPrioriy: 15
   playerNameDisplay: {fileID: 5969927811880822138}
+  <HealthComponent>k__BackingField: {fileID: 2774904421499249768}
   PlayerName:
     m_InternalValue:
       utf8LengthInBytes: 0

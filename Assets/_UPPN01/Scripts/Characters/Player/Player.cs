@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
 using Unity.Collections;
+using System;
 
 public class Player : NetworkBehaviour
 {
@@ -13,7 +14,10 @@ public class Player : NetworkBehaviour
     private int cameraPrioriy = 11;
     [SerializeField]
     private PlayerNameDisplay playerNameDisplay;
-
+    [field: SerializeField]
+    public Health HealthComponent { get; private set; }
+    public static event Action<Player> OnPlayerSpawned;
+    public static event Action<Player> OnPlayerDespawned;
 
     public NetworkVariable<FixedString32Bytes> PlayerName = new NetworkVariable<FixedString32Bytes>();
     public override void OnNetworkSpawn()
@@ -22,6 +26,7 @@ public class Player : NetworkBehaviour
         {
             UserData userData = HostSingleton.Instance.GameManager.NetworkServer.GetUserData(OwnerClientId);
             PlayerName.Value = userData.userName;
+            OnPlayerSpawned?.Invoke(this);
         }
         if (IsOwner)
         {
@@ -31,6 +36,10 @@ public class Player : NetworkBehaviour
     }
     public override void OnNetworkDespawn()
     {
+        if (IsServer)
+        {
+            OnPlayerDespawned?.Invoke(this);
+        }
         if (IsOwner)
         {
             playerNameDisplay.ShutDown();

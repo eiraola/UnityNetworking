@@ -13,7 +13,7 @@ public class SpawnPoint : MonoBehaviour
     {
         spawnPoints.Remove(this);
     }
-    public Vector3 GetRandomSpawnPos()
+    public static Vector3 GetRandomSpawnPos()
     {
         if (spawnPoints.Count == 0)
         {
@@ -23,6 +23,7 @@ public class SpawnPoint : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
 }

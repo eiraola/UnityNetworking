@@ -10,6 +10,7 @@ public class Health : NetworkBehaviour
     public NetworkVariable<int> CurrentHealth = new NetworkVariable<int>();
     private bool isDead = false;
     public int MaxHealth { get => maxHealth;}
+
     public Action<Health> OnDied;
     public override void OnNetworkSpawn()
     {

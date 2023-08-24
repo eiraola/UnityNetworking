@@ -37,6 +37,7 @@ public class NetworkServer: IDisposable {
         _ClientIds.Add(request.ClientNetworkId, userData.userAuthId);
         _userDatas.Add(userData.userAuthId, userData);
         response.Approved = true;
+        response.Position = SpawnPoint.GetRandomSpawnPos();
         response.CreatePlayerObject = true;
     }
 
