@@ -16,6 +16,8 @@ public class Player : NetworkBehaviour
     private PlayerNameDisplay playerNameDisplay;
     [field: SerializeField]
     public Health HealthComponent { get; private set; }
+    [field: SerializeField]
+    public CoinWallet CoinWalletComponent { get; private set; }
     public static event Action<Player> OnPlayerSpawned;
     public static event Action<Player> OnPlayerDespawned;
 

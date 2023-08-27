@@ -1020,6 +1020,7 @@ MonoBehaviour:
   cameraPrioriy: 15
   playerNameDisplay: {fileID: 5969927811880822138}
   <HealthComponent>k__BackingField: {fileID: 2774904421499249768}
+  <CoinWalletComponent>k__BackingField: {fileID: 2257222778541331299}
   PlayerName:
     m_InternalValue:
       utf8LengthInBytes: 0
