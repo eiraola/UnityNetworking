@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 2186.4375, g: 2335.7207, b: 3517.6914, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2393,8 +2393,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823688464}
-  m_LocalRotation: {x: 0.15457141, y: -0.000000008824073, z: 0.0000000013805413, w: 0.9879816}
-  m_LocalPosition: {x: 195.64323, y: -125.94885, z: -16.470543}
+  m_LocalRotation: {x: 0.1545722, y: -0.00000000882407, z: 0.0000000013805482, w: 0.9879815}
+  m_LocalPosition: {x: 1008.7228, y: 406.80478, z: 0.09569645}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2823,8 +2823,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5888a3e4ee96984596d5fad76a66017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 9169253155650799990, guid: 83dd4761dedeca541bb8dcde79ba9b4a,
+  playerPrefab: {fileID: 9220878839679766998, guid: 83dd4761dedeca541bb8dcde79ba9b4a,
     type: 3}
+  keepCoinsPercentage: 50
 --- !u!4 &1992365437
 Transform:
   m_ObjectHideFlags: 0
